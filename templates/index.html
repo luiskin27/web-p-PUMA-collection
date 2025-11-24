@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}PUMA - Home{% endblock %}
+
+{% block content %}
+  <!-- HERO -->
+  <section class="hero" style="background: url('/static/img/sale/header.jpg') center/cover no-repeat; height: 90vh; position: relative;">
+    <div class="hero-content">
+      <h1>PUMA x SQUID GAME</h1>
+      <p>ENTER THE GAME</p>
+      <a href="#" class="btn-primary">SHOP THE COLLECTION</a>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="breadcrumbs">Home / Shop All</div>
+    <h1 class="page-title">SHOP ALL</h1>
+
+    <div class="filters">
+      <button class="filter-btn">Gender</button>
+      <button class="filter-btn">Category</button>
+      <!-- остальные -->
+      <select class="sort-select"><option>RECOMMENDED</option></select>
+    </div>
+
+    <div class="products-grid">
+      {% for product in products %}
+        <div class="product-card">
+          <a href="{{ product.get_absolute_url }}">
+            <img src="{{ product.image_main.url }}" class="img-main" alt="{{ product.name }}">
+            {% if product.image_hover %}
+              <img src="{{ product.image_hover.url }}" class="img-hover" alt="{{ product.name }}">
+            {% endif %}
+          </a>
+          {% if product.is_bestseller %}<div class="badge-tag bestseller">BESTSELLER</div>{% endif %}
+          {% if product.is_new %}<div class="badge-tag new">NEW</div>{% endif %}
+          {% if product.is_sale %}<div class="badge-tag sale">SALE</div>{% endif %}
+
+          <div class="quick-actions">
+            <div class="quick-btn">Wishlist</div>
+            <div class="quick-btn">Cart</div>
+          </div>
+
+          <div class="product-info">
+            <div class="colors">{{ product.colors_count }} Colors</div>
+            <h3>{{ product.name }}</h3>
+            <p>{{ product.gender }}'s {{ product.category }}</p>
+            <p class="price">${{ product.price }}
+              {% if product.old_price %}<span class="old-price">${{ product.old_price }}</span>{% endif %}
+            </p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}

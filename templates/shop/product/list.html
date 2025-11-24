@@ -1,0 +1,72 @@
+{% extends "shop/base.html" %}
+{% load static %}
+
+{% block title %}
+  {% if category %}{{ category.name }}{% else %}Shop All{% endif %} | PUMA
+{% endblock %}
+
+{% block content %}
+  <!-- HERO BANNER -->
+  <section class="hero">
+    <img src="{% static 'images/hero-squidgame.jpg' %}" alt="PUMA x SQUID GAME" class="hero-bg">
+    <div class="hero-content">
+      <h1>PUMA x SQUID GAME</h1>
+      <p>ENTER THE GAME</p>
+      <a href="#" class="btn-primary">SHOP THE COLLECTION</a>
+    </div>
+  </section>
+
+  <div class="container">
+    <nav class="breadcrumbs">
+      Home {% if category %}/ {{ category.name }}{% endif %}
+    </nav>
+
+    <h1 class="page-title">
+      {% if category %}{{ category.name }}{% else %}SHOP ALL{% endif %}
+    </h1>
+
+    <!-- Фильтры (пока просто заглушка) -->
+    <div class="filters">
+      <button class="filter-btn">Gender</button>
+      <button class="filter-btn">Category</button>
+      <button class="filter-btn">Size</button>
+      <button class="filter-btn">Color</button>
+      <select class="sort-select"><option>Recommended</option></select>
+    </div>
+
+    <!-- Сетка товаров -->
+    <div class="products-grid">
+      {% for product in products %}
+        <div class="product-card">
+          <a href="{{ product.get_absolute_url }}">
+            {% if product.image %}
+              <img src="{{ product.image.url }}" class="img-main" alt="{{ product.name }}">
+            {% else %}
+              <img src="{% static 'img/no_image.png' %}" class="img-main">
+            {% endif %}
+            {% if product.image_hover %}
+              <img src="{{ product.image_hover.url }}" class="img-hover" alt="{{ product.name }}">
+            {% endif %}
+          </a>
+
+          {% if product.is_bestseller %}<span class="badge bestseller">BESTSELLER</span>{% endif %}
+          {% if product.is_new %}<span class="badge new">NEW</span>{% endif %}
+
+          <div class="quick-actions">
+            <button class="quick-btn">Wishlist</button>
+            <button class="quick-btn">Cart</button>
+          </div>
+
+          <div class="product-info">
+            <div class="colors">{{ product.colors_count }} COLORS</div>
+            <h3>{{ product.name }}</h3>
+            <p>{{ product.category.name }}</p>
+            <div class="price">${{ product.price }}</div>
+          </div>
+        </div>
+      {% empty %}
+        <p>No products yet. Add some in admin panel!</p>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}

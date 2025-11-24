@@ -1,0 +1,103 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{% block title %}PUMA® - Official Online Store{% endblock %}</title>
+  
+  <!-- Шрифты -->
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  {% load static %}
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-top">
+      <div class="container header-inner">
+        <a href="#" class="logo">
+          <img src="/static/img/sale/puma-logo-cover.png" alt="PUMA">
+        </a>
+        <nav class="main-nav">
+          <ul>
+            <li><a href="#">Gift Guide</a></li>
+            <li><a href="#">Women</a></li>
+            <li><a href="#">Men</a></li>
+            <li><a href="#">Kids</a></li>
+            <li><a href="#">Lifestyle</a></li>
+            <li><a href="#">Sport</a></li>
+            <li><a href="#">Sale</a></li>
+          </ul>
+        </nav>
+        <div class="header-actions">
+          <div class="search-box">
+            <input type="text" placeholder="SEARCH" />
+            <button>Search</button>
+          </div>
+          <a href="#" class="icon">Wishlist <span class="badge">3</span></a>
+          <a href="#" class="icon">Cart <span class="badge">1</span></a>
+          <a href="#" class="icon">Account</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- PROMO BAR -->
+  <div class="promo-bar">
+    50% OFF SELECT STYLES — <u>SHOP NOW</u> EXCLUSIONS APPLY — CATCH THESE HUGE SAVINGS BEFORE THEY'RE GONE
+  </div>
+
+  {% block content %}{% endblock %}
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-col">
+        <h4>SUPPORT</h4>
+        <ul>
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Shipping and Delivery</a></li>
+          <li><a href="#">Return Policy</a></li>
+          <li><a href="#">Gift Card Balance</a></li>
+          <li><a href="#">Service Discount</a></li>
+          <li><a href="#">Student Discount</a></li>
+          <li><a href="#">Refer a Friend</a></li>
+          <li><a href="#">Sitemap</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>ABOUT</h4>
+        <ul>
+          <li><a href="#">NYC Flagship Store</a></li>
+          <li><a href="#">Las Vegas Flagship Store</a></li>
+          <li><a href="#">Store Locator</a></li>
+          <li><a href="#">Terms & Conditions</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>STAY UP TO DATE</h4>
+        <p>Sign Up for Email</p>
+      </div>
+      <div class="footer-col">
+        <h4>EXPLORE</h4>
+        <img src="{% static 'images/app-store.png' %}" alt="App Store">
+        <img src="{% static 'images/google-play.png' %}" alt="Google Play">
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="social-icons">
+        <a href="#">YouTube</a> <a href="#">X</a> <a href="#">Pinterest</a> <a href="#">Instagram</a> <a href="#">Facebook</a>
+      </div>
+      <div class="country-selector">UNITED STATES</div>
+      <p>© PUMA NORTH AMERICA, INC. IMPRINT AND LEGAL DATA WEB ID: 907.263.347</p>
+    </div>
+  </footer>
+
+  <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>
