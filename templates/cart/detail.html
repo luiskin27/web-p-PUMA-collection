@@ -1,0 +1,67 @@
+{% extends "shop/base.html" %}
+{% load static %}
+
+{% block title %}Корзина{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <h1 class="mb-4">Ваша корзина</h1>
+
+  {% if cart|length == 0 %}
+    <div class="alert alert-info">
+      Корзина пуста. <a href="{% url 'shop:product_list' %}">Перейти к покупкам →</a>
+    </div>
+  {% else %}
+    <div class="table-responsive">
+      <table class="table align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>Товар</th>
+            <th>Размер</th>
+            <th>Цена</th>
+            <th>Кол-во</th>
+            <th>Сумма</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for key, item in cart.cart.items %}
+            {% with product=item.product %}
+              <tr>
+                <td>
+                  <div class="d-flex align-items-center">
+                    {% if product.image %}
+                      <img src="{{ product.image.url }}" alt="{{ product.name }}" width="80" class="me-3">
+                    {% endif %}
+                    <div>
+                      <strong>{{ product.name }}</strong>
+                    </div>
+                  </div>
+                </td>
+                <td><strong>{{ item.size }}</strong></td>
+                <td>{{ product.price }} ₽</td>
+                <td>{{ item.quantity }}</td>
+                <td><strong>{{ item.total_price }} ₽</strong></td>
+                <td>
+                  <form action="{% url 'cart:cart_remove' key %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger btn-sm">×</button>
+                  </form>
+                </td>
+              </tr>
+            {% endwith %}
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="text-end my-4">
+      <h3>Итого: {{ cart.get_total_price }} ₽</h3>
+   
+      <a href="{% url 'orders:create' %}" class="btn btn-success btn-lg px-5">
+  Оформить заказ →
+</a>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

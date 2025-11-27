@@ -1,0 +1,56 @@
+<!-- templates/includes/header.html -->
+ 
+  <header class="header">
+    <div class="header-top">
+      <div class="container header-inner">
+        <a class="logo">
+          <img src="/static/img/sale/logo-white.svg.png" alt="PUMA">
+        </a>
+        <nav class="main-nav">
+          <ul>
+            <li><a href="#">Gift Guide</a></li>
+            <li><a href="#">Women</a></li>
+            <li><a href="#">Men</a></li>
+            <li><a href="#">Kids</a></li>
+            <li><a href="#">Lifestyle</a></li>
+            <li><a href="#">Sport</a></li>
+            <li><a href="#">Sale</a></li>
+          </ul>
+        </nav>
+        
+  <div class="search-box">
+    <input type="text" placeholder="SEARCH" />
+    <button>Search</button>
+  </div>
+
+  <a href="#" class="icon">Wishlist <span class="badge"></span></a>
+  <a href="/cart/" class="icon">Cart 
+    <span class="badge">{{ cart|length }}</span>
+  </a>
+
+  {% if user.is_authenticated %}
+    <div class="dropdown d-inline-block">
+      <a href="#" class="icon dropdown-toggle" data-bs-toggle="dropdown">
+        Привет, {{ user.first_name|default:user.username }} 
+      </a>
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item"><a href="/profile/">Мой профиль</a></li>
+        <li><a class="dropdown-item" href="/logout/">Выйти</a></li>
+      </ul>
+    </div>
+  {% else %}
+    <a href="/login/" class="icon">Войти</a>
+  {% endif %}
+</div>
+          <a href="#" class="icon">Account</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- PROMO BAR -->
+  <div class="promo-bar">
+    50% OFF SELECT STYLES — <u>SHOP NOW</u> EXCLUSIONS APPLY — CATCH THESE HUGE SAVINGS BEFORE THEY'RE GONE
+  </div>
+
+  

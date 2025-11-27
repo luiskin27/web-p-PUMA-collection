@@ -4,7 +4,7 @@
 /* ОРИГИНАЛЬНЫЙ ШРИФТ PUMA */
 @font-face {
     font-family: 'Puma';
-    src: url('/static/fonts/FF\ DIN\ for\ Puma\ W15\ Cond\ Bold_novelfonts.com.ttf') format('ttf');
+    src: url('/static/fonts/FF\ DIN\ for\ Puma\ W15\ Cond\ Bold_novelfonts.com.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -12,7 +12,7 @@
 
 @font-face {
     font-family: 'Puma';
-    src: url('/static/fonts/FF\ DIN\ for\ Puma\ W15\ Cond\ Bold_novelfonts.com.ttf') format('ttf');
+    src: url('/static/fonts/FF\ DIN\ for\ Puma\ W15\ Cond\ Bold_novelfonts.com.ttf') format('truetype');
     font-weight: bold;
     font-style: normal;
     font-display: swap;
@@ -20,14 +20,20 @@
 
 /* Применяем шрифт ко всему сайту */
 body {
-    font-family: 'Puma', 'Montserrat', sans-serif !important;
+    font-family: 'Puma',  !important;
 }
 
 /* Заголовки — жирнее */
-h1, h2, h3, .page-title, .product-info h3 {
-    font-family: 'Puma', 'Anton', sans-serif;
+/* h1, h2, h3, .page-title, .product-info h3 {
+    font-family: 'Puma';
     font-weight: bold;
+} */
+
+h1, h2, h3, .page-title, .price, .btn-primary,
+.main-nav a, .filter-btn, .badge {
+    font-weight: bold !important;
 }
+
 
 :root {
   --puma-teal: #009c91;
@@ -42,12 +48,31 @@ h1, h2, h3, .page-title, .product-info h3 {
   --gray-700: #495057;
   --gray-800: #343a40;
   --gray-900: #212529;
-  --font-primary: 'Puma', 'Montserrat', sans-serif;
+  --font-primary: 'Puma',
   --font-heading: 'Anton', sans-serif;
   --transition: all 0.3s ease;
   --border-radius: 4px;
   --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
   --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+  --font-primary: 'Puma', system-ui, -apple-system, sans-serif;
+  --font-heading: 'Puma', system-ui, -apple-system, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+    font-family: 'Puma', sans-serif !important;
+}
+
+
+
+body,
+h1, h2, h3, h4, h5, h6,
+p, span, a, button, input, select, textarea,
+.header, .main-nav, .promo-bar, .page-title,
+.product-info h3, .price, .badge, .btn-primary {
+    font-family: 'Puma', sans-serif !important;
+    letter-spacing: 0.5px !important;
 }
 
 /* Reset & Base */
@@ -95,7 +120,7 @@ img {
   background: var(--puma-black);
   color: var(--puma-white);
   z-index: 1000;
-  height: 64px;
+  height: 44px;
   box-shadow: var(--shadow-sm);
 }
 
@@ -200,7 +225,7 @@ img {
   padding: 12px 40px;
   font-size: 16px;
   font-weight: 600;
-  margin-top: 64px;
+  margin-top: 44px;
 }
 
 .promo-bar u {
@@ -213,14 +238,15 @@ img {
   position: relative;
   height: calc(100vh - 64px - 48px); /* minus header + promo */
   overflow: hidden;
-  margin-top: 48px;
+  margin-top: 14px;
+    background-image: url(/static/img/sale/hero-squidgame.jpg.jpg);
 }
 
 .hero-bg {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  background-image: url(/static/img/sale/hero-squidgame.jpg.jpg);
+
 }
 
 .hero-content {
@@ -329,14 +355,16 @@ img {
 }
 
 .product-card {
-  position: relative;
-  cursor: pointer;
-  transition: var(--transition);
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    background: transparent !important;   /* убираем серый фон */
+    box-shadow: none !important;
 }
 
 .product-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-md);
+  transform: translateY(-8px);   /* только лёгкий подъём */
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
 }
 
 .product-card img {
@@ -363,6 +391,10 @@ img {
 
 .product-card:hover .img-hover {
   opacity: 1;
+}
+
+.product-card:hover .img-main:not(.img-hover + *) {
+    opacity: 1;
 }
 
 /* Badges */
@@ -443,7 +475,7 @@ img {
 
 .product-info h3 {
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 400;
   margin-bottom: 4px;
 }
 

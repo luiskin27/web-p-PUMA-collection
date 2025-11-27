@@ -1,0 +1,26 @@
+{% extends "shop/base.html" %}
+{% block title %}Оформление заказа{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <h1 class="mb-5">Оформление заказа</h1>
+  <div class="row">
+    <div class="col-md-8">
+      <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-dark btn-lg">Оформить заказ</button>
+      </form>
+    </div>
+    <div class="col-md-4">
+      <h4>Ваш заказ</h4>
+      <ul>
+        {% for item in cart %}
+          <li>{{ item.product.name }} ({{ item.size }}) × {{ item.quantity }} = {{ item.total_price }} ₽</li>
+        {% endfor %}
+      </ul>
+      <p><strong>Итого: {{ cart.get_total_price }} ₽</strong></p>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -8,7 +8,7 @@
 {% block content %}
   <!-- HERO BANNER -->
   <section class="hero">
-    <img src="{% static 'images/hero-squidgame.jpg' %}" alt="PUMA x SQUID GAME" class="hero-bg">
+    <!-- <img src="{% static 'images/hero-squidgame.jpg' %}" alt="PUMA x SQUID GAME" class="hero-bg"> -->
     <div class="hero-content">
       <h1>PUMA x SQUID GAME</h1>
       <p>ENTER THE GAME</p>
@@ -52,11 +52,7 @@
           {% if product.is_bestseller %}<span class="badge bestseller">BESTSELLER</span>{% endif %}
           {% if product.is_new %}<span class="badge new">NEW</span>{% endif %}
 
-          <div class="quick-actions">
-            <button class="quick-btn">Wishlist</button>
-            <button class="quick-btn">Cart</button>
-          </div>
-
+          
           <div class="product-info">
             <div class="colors">{{ product.colors_count }} COLORS</div>
             <h3>{{ product.name }}</h3>

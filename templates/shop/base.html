@@ -10,16 +10,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
   
   <!-- CSS -->
+    {% load static %}
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
-  {% load static %}
+  
 </head>
 <body>
   <!-- HEADER -->
   <header class="header">
     <div class="header-top">
       <div class="container header-inner">
-        <a href="#" class="logo">
-          <img src="/static/img/sale/puma-logo-cover.png" alt="PUMA">
+        <a class="logo">
+          <img src="/static/img/sale/logo-white.svg.png" alt="PUMA">
         </a>
         <nav class="main-nav">
           <ul>
@@ -32,14 +33,32 @@
             <li><a href="#">Sale</a></li>
           </ul>
         </nav>
-        <div class="header-actions">
-          <div class="search-box">
-            <input type="text" placeholder="SEARCH" />
-            <button>Search</button>
-          </div>
-          <a href="#" class="icon">Wishlist <span class="badge">3</span></a>
-          <a href="#" class="icon">Cart <span class="badge">1</span></a>
-          <a href="#" class="icon">Account</a>
+        
+          <div class="header-actions">
+  <div class="search-box">
+    <input type="text" placeholder="SEARCH" />
+    <button>Search</button>
+  </div>
+
+  <a href="#" class="icon">Wishlist <span class="badge"></span></a>
+  <a href="/cart/" class="icon">Cart 
+    <span class="badge">{{ cart|length }}</span>
+  </a>
+
+  {% if user.is_authenticated %}
+    <div class="dropdown d-inline-block">
+      <a href="#" class="icon dropdown-toggle" data-bs-toggle="dropdown">
+        Привет, {{ user.first_name|default:user.username }} 
+      </a>
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item"><a href="/profile/">Мой профиль</a></li>
+        <li><a class="dropdown-item" href="/logout/">Выйти</a></li>
+      </ul>
+    </div>
+  {% else %}
+    <a href="/login/" class="icon">Войти</a>
+  {% endif %}
+</div>
         </div>
       </div>
     </div>
@@ -51,6 +70,38 @@
   </div>
 
   {% block content %}{% endblock %}
+
+<!-- Модальное окно "Войдите, чтобы добавить в корзину" -->
+
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header border-0">
+        <h5 class="modal-title" id="loginModalLabel">Требуется вход в аккаунт</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center py-5">
+  <p class="mb-5" style="font-size: 18px; color: #333;">
+    Чтобы добавить товар в корзину или избранное,<br>пожалуйста, войдите в аккаунт
+  </p>
+
+  <a href="/login/?next={{ request.path|urlencode }}" 
+     class="btn btn-dark px-5 py-3 d-block mx-auto mb-4" 
+     style="font-size: 18px; font-weight: 600; min-width: 240px;">
+    Войти в аккаунт
+  </a>
+
+  <div style="font-size: 16px;">
+    <small style="color: #666;">Ещё нет аккаунта? </small>
+    <a href="/register/" 
+       style="color: #009c91; font-weight: 600; text-decoration: underline;">
+      Зарегистрироваться
+    </a>
+  </div>
+</div>
+    </div>
+  </div>
+</div>
 
   <!-- FOOTER -->
   <footer class="footer">
@@ -99,5 +150,9 @@
   </footer>
 
   <script src="{% static 'js/main.js' %}"></script>
+
+
+  
+
 </body>
 </html>

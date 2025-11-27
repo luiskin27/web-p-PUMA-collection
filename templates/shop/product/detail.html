@@ -1,0 +1,186 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ product.name }} | PUMA</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+{% include 'includes/header.html' %}
+
+<div class="container" style="margin-top: 100px; padding: 40px 0;">
+    <div class="grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start;">
+
+        <!-- ГАЛЕРЕЯ -->
+        <div class="product-gallery">
+            {% if product.image_hover %}
+                <div class="main-image" style="margin-bottom: 16px; position: relative;">
+                    <img src="{{ product.image_hover.url }}" alt="{{ product.name }}" style="width:100%; border-radius: 4px;">
+                </div>
+            {% endif %}
+            <img src="{{ product.image.url }}" alt="{{ product.name }}" style="width:100%; border-radius: 4px;">
+            <!-- Здесь потом можно добавить миниатюры -->
+        </div>
+
+        <!-- ИНФОРМАЦИЯ И ВЫБОР -->
+        <div class="product-details">
+            <h1 style="font-size: 40px; margin-bottom: 8px; font-weight: bold;">{{ product.name }}</h1>
+            <p class="text-muted" style="margin-bottom: 16px; font-size: 16px;">{{ product.category.name }}</p>
+
+            <!-- Рейтинг (заглушка) -->
+            <div style="margin-bottom: 24px;">
+                <span style="color: #ffb400; font-size: 20px;">★★★★☆</span>
+                <span style="color: #999; margin-left: 8px;">Read 26 Reviews</span>
+            </div>
+
+            <!-- Цена -->
+            <div style="margin-bottom: 32px;">
+                {% if product.old_price %}
+                    <span style="font-size: 20px; color: #999; text-decoration: line-through;">${{ product.old_price }}</span>
+                    <span style="font-size: 36px; font-weight: bold; margin-left: 12px;">${{ product.price }}</span>
+                {% else %}
+                    <span style="font-size: 36px; font-weight: bold;">${{ product.price }}</span>
+                {% endif %}
+            </div>
+
+            <!-- Цвета (заглушка) -->
+            <div style="margin-bottom: 32px;">
+                <p style="margin-bottom: 8px; font-weight: 600;">COLOR: {{ product.colors_count }} COLORS AVAILABLE</p>
+                <div style="display: flex; gap: 12px;">
+                    <div style="width: 60px; height: 60px; border: 2px solid #000; border-radius: 4px; background: #000;"></div>
+                    <div style="width: 60px; height: 60px; border: 1px solid #ccc; border-radius: 4px; background: #fff;"></div>
+                    <div style="width: 60px; height: 60px; border: 1px solid #ccc; border-radius: 4px; background: #009c91;"></div>
+                </div>
+            </div>
+
+           <!-- ВЫБОР РАЗМЕРА И ДОБАВЛЕНИЕ В КОРЗИНУ -->
+<div style="margin-bottom: 40px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <p style="font-weight: 600;">SIZE</p>
+        <a href="#" style="font-size: 14px; color: #000; border-bottom: 1px solid;">SIZE GUIDE</a>
+    </div>
+
+    <!-- БЛОК ДОБАВЛЕНИЯ В КОРЗИНУ — ТОЧНО КАК В PUMA -->
+<div style="margin-bottom: 40px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <p style="font-weight: 600;">SIZE</p>
+        <a href="#" style="font-size: 14px; color: #000; border-bottom: 1px solid;">SIZE GUIDE</a>
+    </div>
+
+    {% if user.is_authenticated %}
+        <!-- АВТОРИЗОВАННЫЙ ПОЛЬЗОВАТЕЛЬ — ДОБАВЛЯЕТ НОРМАЛЬНО -->
+        <form action="{% url 'cart:cart_add' product.id %}" method="post" style="display: flex; gap: 16px;">
+            {% csrf_token %}
+            <select name="size" required style="padding: 16px; border: 1px solid #000; font-weight: 600; min-width: 120px;">
+                <option value="">Выберите размер</option>
+                {% if product.product_type == 'shoes' %}
+                    {% for size in product.shoe_sizes.all %}
+                        <option value="{{ size }}">{{ size }}</option>
+                    {% endfor %}
+                {% else %}
+                    {% for size in product.clothing_sizes.all %}
+                        <option value="{{ size }}">{{ size }}</option>
+                    {% endfor %}
+                {% endif %}
+            </select>
+
+            <button type="submit" class="btn-add-to-cart" style="flex: 1; background: #000; color: #fff; padding: 18px; font-size: 18px; font-weight: bold; border: none; cursor: pointer; text-transform: uppercase;">
+                ADD TO CART
+            </button>
+        </form>
+    {% else %}
+        <!-- ГОСТЬ — ОТКРЫВАЕТСЯ МОДАЛКА -->
+        <div style="display: flex; gap: 16px;">
+            <select disabled style="padding: 16px; border: 1px solid #ccc; background:#f9f9f9; min-width: 120px;">
+                <option>Выберите размер</option>
+            </select>
+
+            <button type="button"
+                    class="btn-add-to-cart" 
+                    data-bs-toggle="modal" 
+                    data-bs-target="#loginModal"
+                    style="flex: 1; background: #000; color: #fff; padding: 18px; font-size: 18px; font-weight: bold; border: none; cursor: pointer; text-transform: uppercase;">
+                ADD TO CART
+            </button>
+        </div>
+    {% endif %}
+</div>
+
+</div>
+
+{% if user.is_authenticated %}
+    <button style="width: 60px; height: 60px; border: 2px solid #000; background: transparent; font-size: 24px; cursor: pointer;">
+        ♡
+    </button>
+{% else %}
+    <button type="button" 
+            data-bs-toggle="modal" 
+            data-bs-target="#loginModal"
+            style="width: 60px; height: 60px; border: 2px solid #000; background: transparent; font-size: 24px; cursor: pointer;">
+        ♡
+    </button>
+{% endif %}
+
+
+            <!-- Доп. инфа -->
+            <div style="font-size: 14px; line-height: 1.8; color: #444;">
+                <p style="margin-bottom: 16px;">
+                    <strong>Free shipping</strong> on orders over $50 • <strong>Free returns</strong>
+                </p>
+                <p>{{ product.description|default:"The ultimate in style and comfort. Made with premium materials." }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- ===== РЕКОМЕНДАЦИИ — КРАСИВО И КАК НА PUMA.COM ===== -->
+    <div style="margin-top: 120px; padding-bottom: 80px;">
+        <h2 style="text-align: center; font-size: 32px; font-weight: bold; text-transform: uppercase; margin-bottom: 48px;">
+            YOU MAY ALSO LIKE
+        </h2>
+
+        <div class="products-grid">
+            {% for rec in product.category.products.all|slice:":12" %}
+                {% if rec != product and rec.available %}
+                    <div class="product-card">
+                        <a href="{{ rec.get_absolute_url }}">
+                            {% if rec.image_hover %}
+                                <img src="{{ rec.image.url }}" alt="{{ rec.name }}" class="img-main">
+                                <img src="{{ rec.image_hover.url }}" alt="{{ rec.name }}" class="img-hover">
+                            {% else %}
+                                <img src="{{ rec.image.url }}" alt="{{ rec.name }}" class="img-main">
+                            {% endif %}
+
+                            {% if rec.is_bestseller %}
+                                <span class="badge bestseller">BESTSELLER</span>
+                            {% endif %}
+                            {% if rec.is_new %}
+                                <span class="badge new">NEW</span>
+                            {% endif %}
+
+                            <div class="product-info mt-3">
+                                <span class="colors text-muted">{{ rec.colors_count }} COLORS</span>
+                                <h3 class="mb-1">{{ rec.name }}</h3>
+                                <p class="text-muted small">{{ rec.category.name }}</p>
+                                <p class="price">${{ rec.price }}</p>
+                            </div>
+                        </a>
+                    </div>
+                {% endif %}
+            {% empty %}
+                <p style="grid-column: 1 / -1; text-align: center; font-size: 18px; color: #666; padding: 60px 0;">
+                    No recommendations in this category yet.
+                </p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% include 'includes/footer.html' %}
+
+</body>
+</html>
