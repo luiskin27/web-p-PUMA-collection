@@ -3,46 +3,55 @@
   <header class="header">
     <div class="header-top">
       <div class="container header-inner">
-        <a class="logo">
-          <img src="/static/img/sale/logo-white.svg.png" alt="PUMA">
-        </a>
+        <a href="{% url 'shop:product_list' %}" class="logo">
+  <img src="{% static 'img/sale/logo-white.svg.png' %}" alt="PUMA">
+</a>
         <nav class="main-nav">
-          <ul>
-            <li><a href="#">Gift Guide</a></li>
-            <li><a href="#">Women</a></li>
-            <li><a href="#">Men</a></li>
-            <li><a href="#">Kids</a></li>
-            <li><a href="#">Lifestyle</a></li>
-            <li><a href="#">Sport</a></li>
-            <li><a href="#">Sale</a></li>
-          </ul>
-        </nav>
+  <ul>
+    <li><a href="{% url 'shop:product_list_by_category' 'women' %}">Women</a></li>
+    <li><a href="{% url 'shop:product_list_by_category' 'men' %}">Men</a></li>
+    <li><a href="{% url 'shop:product_list_by_category' 'lifestyle' %}">Lifestyle</a></li>
+    <li><a href="{% url 'shop:product_list_by_category' 'sport' %}">Sport</a></li>
+    <li><a href="{% url 'shop:product_list_by_category' 'sale' %}">Sale</a></li>
+  </ul>
+</nav>
         
+ <div class="header-actions">
   <div class="search-box">
     <input type="text" placeholder="SEARCH" />
     <button>Search</button>
   </div>
 
   <a href="#" class="icon">Wishlist <span class="badge"></span></a>
-  <a href="/cart/" class="icon">Cart 
-    <span class="badge">{{ cart|length }}</span>
+  
+  <a href="/cart/" class="icon position-relative">
+    Cart 
+    {% if cart %}
+      <span class="badge bg-danger position-absolute top-0 start-100 translate-middle rounded-pill">
+        {{ cart|length }}
+      </span>
+    {% endif %}
   </a>
 
+  <!-- КРАСИВЫЙ ДРОПДАУН С ИМЕНЕМ -->
   {% if user.is_authenticated %}
     <div class="dropdown d-inline-block">
-      <a href="#" class="icon dropdown-toggle" data-bs-toggle="dropdown">
-        Привет, {{ user.first_name|default:user.username }} 
+      <a href="#" class="icon dropdown-toggle text-white fw-bold" 
+         id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false"
+         style="font-size: 16px; text-decoration: none;">
+        {{ user.first_name|default:user.username|capfirst }}
       </a>
-      <ul class="dropdown-menu">
-        <li><a class="dropdown-item"><a href="/profile/">Мой профиль</a></li>
-        <li><a class="dropdown-item" href="/logout/">Выйти</a></li>
+      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+        <li><a class="dropdown-item" href="/profile/">Мой профиль</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item text-danger" href="{% url 'logout' %}">Выйти</a></li>
       </ul>
     </div>
   {% else %}
-    <a href="/login/" class="icon">Войти</a>
+    <a href="/login/" class="icon text-white">Account</a>
   {% endif %}
 </div>
-          <a href="#" class="icon">Account</a>
+          
         </div>
       </div>
     </div>
