@@ -1,0 +1,19 @@
+Спасибо за заказ в PUMA!
+
+Номер заказа: №{{ order.id }}
+Дата: {{ order.created|date:"d.m.Y в H:i" }}
+
+Товары:
+{% for item in order.items.all %}
+— {{ item.product.name }} ({{ item.size }}) × {{ item.quantity }} шт. = ${{ item.get_cost }}
+{% endfor %}
+
+Итого: ${{ order.get_total_cost }}
+
+Доставка:
+{{ order.first_name }} {{ order.last_name }}
+{{ order.address }}, {{ order.city }}, {{ order.postal_code }}
+Email: {{ order.email }}
+
+Скоро свяжемся с вами!
+PUMA Shop

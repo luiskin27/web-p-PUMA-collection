@@ -11,10 +11,10 @@ from .cart import Cart
 @require_POST
 def cart_add(request, product_id):
     # Проверка: только Покупатели и Администраторы могут добавлять в корзину
-    allowed_groups = ['Покупатели', 'Администраторы']
-    if not request.user.groups.filter(name__in=allowed_groups).exists():
-        messages.error(request, "У вас нет прав добавлять товары в корзину.")
-        return redirect('/')
+    # allowed_groups = ['Покупатели', 'Администраторы']
+    # if not request.user.groups.filter(name__in=allowed_groups).exists():
+    #     messages.error(request, "У вас нет прав добавлять товары в корзину.")
+    #     return redirect('/')
 
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
@@ -45,10 +45,10 @@ def cart_remove(request, key):
 @login_required(login_url='/login/')
 def cart_detail(request):
     # КЛЮЧЕВАЯ ПРОВЕРКА — только разрешённые группы видят корзину
-    allowed_groups = ['Покупатели', 'Администраторы']
-    if not request.user.groups.filter(name__in=allowed_groups).exists():
-        messages.error(request, "У вас нет доступа к корзине.")
-        return redirect('/')
+    # allowed_groups = ['Покупатели', 'Администраторы']
+    # if not request.user.groups.filter(name__in=allowed_groups).exists():
+    #     messages.error(request, "У вас нет доступа к корзине.")
+    #     return redirect('/')
 
     cart = Cart(request)
     return render(request, 'cart/detail.html', {'cart': cart})
@@ -65,7 +65,7 @@ def cart_clear(request):
     cart.clear()
     messages.success(request, "Корзина очищена")
     return redirect('cart:cart_detail')
-    
+
 
 
 

@@ -144,6 +144,15 @@ LOGIN_URL = '/login/'
 
 CART_SESSION_ID = 'cart' 
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# settings.py — добавь в самый низ
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = 'lionarstan604@gmail.com'        # ← твой реальный Gmail
+# EMAIL_HOST_PASSWORD = 'flon mrwk ykiw gcbn'  # ← пароль приложения (ниже объясню как получить)
+
 # # Кастомный пользователь
 # AUTH_USER_MODEL = 'users.CustomUser'
 
